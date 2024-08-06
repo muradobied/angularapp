@@ -29,11 +29,8 @@ jobs:
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USER }}
-        key: ${{ secrets.SSH_KEY }}
-        run: scp -r dist/angular/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/root/angular
-        
-        #source: dist/angularapp/*
-        #target: /root/angular
+        source: dist/angularapp/*
+        target: /root/angularapp
 
     - name: SSH and restart server
       uses: appleboy/ssh-action@v0.1.5
@@ -42,5 +39,5 @@ jobs:
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_KEY }}
         script: |
-          cd /root/angular
+          cd /root/angularapp
           systemctl restart nginx
