@@ -22,7 +22,7 @@ jobs:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_KEY }}
-        run: scp -r dist/angularapp/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/root/angular/angularapp
+        run: scp -r dist/angularapp/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/root/angular
     - name: Build Angular app
       run: npm run build --prod
       
