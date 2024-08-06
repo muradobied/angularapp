@@ -1,4 +1,4 @@
-name: Deploy Angular to Hetzner
+name: Deploy Angular to Hetzner #deploying the angular
 
 on:
   push:
