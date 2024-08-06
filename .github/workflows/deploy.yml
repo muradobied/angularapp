@@ -23,4 +23,5 @@ jobs:
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_KEY }}
         script: |
-          ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /root/angular && ./deploy.sh"
+           cd /root/angular
+           ./deploy.sh
