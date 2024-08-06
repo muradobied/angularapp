@@ -30,8 +30,10 @@ jobs:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_KEY }}
-        source: dist/angularapp/*
-        target: /root/angular
+        run: scp -r dist/angular/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/root/angular
+        
+        #source: dist/angularapp/*
+        #target: /root/angular
 
     - name: SSH and restart server
       uses: appleboy/ssh-action@v0.1.5
