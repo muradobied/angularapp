@@ -1,27 +1,44 @@
-name: Deploy Angular to Hetzner #deploying the angular
+name: Deploy Angular Application
 
 on:
   push:
     branches:
-      - main
+      - main  # or the branch you want to deploy
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20'
+
     - name: Install dependencies
       run: npm install
 
-    - name: Setup SSH
-      uses: appleboy/ssh-action@v1.0.0
+    - name: Build Angular application
+      run: npm run build -- --prod
+
+    - name: Copy files via SSH
+      uses: appleboy/scp-action@v0.0.7
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        source: "dist/angularapp/*"
+        target: "/root/angular"
+
+    - name: SSH and restart server
+      uses: appleboy/ssh-action@v0.1.5
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_KEY }}
         script: |
-           cd /root/angular
-           ./deploy.sh
+          cd /root/angular
+          systemctl restart nginx
