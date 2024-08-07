@@ -27,6 +27,6 @@ jobs:
            npm run build
            set -exu
            rm -rf /var/www/dist
-           mv /root/angular/angularapp/dist /var/www/dist/basics-assignment-1-start/browser/
+           mv /root/angular/angularapp/dist /var/www/dist/basics-assignment-1-start/browser
            systemctl reload nginx.service
 
