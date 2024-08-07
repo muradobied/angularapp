@@ -21,12 +21,12 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         script: |
            set -exu
-           cd angular/angularapp/
+           cd root/angular/angularapp/
            git pull
            npm ci
            npm run build
            set -exu
            rm -rf /var/www/dist
-           mv /angular/angularapp/dist /var/www/
+           mv /root/angular/angularapp/dist /var/www/
            systemctl reload nginx.service
 
