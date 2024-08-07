@@ -20,8 +20,10 @@ jobs:
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_KEY }}
         script: |
+           set -exu
            cd angular/angularapp/
            git pull
+           npm ci
            npm run build
            set -exu
            rm -rf /var/www/dist
