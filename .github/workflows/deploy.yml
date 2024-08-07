@@ -13,32 +13,18 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '20'
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Build Angular application
-      run: npm run build
-
     - name: Copy files via SSH
       uses: appleboy/scp-action@v0.0.7
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_KEY }}
-        source: dist/angularapp/*
-        target: /root/angularapp
-
-    - name: SSH and restart server
-      uses: appleboy/ssh-action@v0.1.5
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USER }}
-        key: ${{ secrets.SSH_KEY }}
         script: |
-          cd /root/angularapp
-          systemctl restart nginx
+           rm -rf /var/www/dist
+           cd angular/
+           git pull
+           npm run build
+           set -exu
+           mv /home/root/angular/dist /var/www/
+           systemctl reload nginx.service
+
