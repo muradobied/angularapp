@@ -21,7 +21,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         script: |
            set -exu
-           cd root/angular/angularapp/
+           cd /root/angular/angularapp/
            git pull
            npm ci
            npm run build
